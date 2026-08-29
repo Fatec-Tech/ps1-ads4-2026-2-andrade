@@ -23,6 +23,7 @@ function renderizarTabela() {
       <td>${paciente.email}</td>
       <td>${paciente.telefone}</td>
       <td>${formatarData(paciente.nascimento)}</td>
+      <td>${calcularIdade(paciente.nascimento)}</td>
     `;
 
     tabela.appendChild(linha);
@@ -33,6 +34,23 @@ function renderizarTabela() {
 function formatarData(dataISO) {
   const [ano, mes, dia] = dataISO.split('-');
   return `${dia}/${mes}/${ano}`;
+}
+
+// funcao pra calcular idade
+function calcularIdade(dataNascimento){
+  const hoje = new Date();
+  const nascimento = new Date(dataNascimento);
+
+  let idade = hoje.getFullYear() - nascimento.getFullYear();
+
+// faz a conta do mes
+  let mes = hoje.getMonth() - nascimento.getMonth();
+
+  if (mes<0 || (mes === 0 && hoje.getDate() < nascimento.getDate())){
+    idade--;
+  }
+
+  return idade;
 }
 
 // Evento disparado quando o formulário é enviado
