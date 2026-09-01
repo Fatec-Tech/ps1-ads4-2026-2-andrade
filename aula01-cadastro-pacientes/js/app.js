@@ -4,6 +4,7 @@ const pacientes = [];
 // Referências aos elementos do DOM que vamos usar várias vezes
 const formulario = document.getElementById('form-paciente');
 const tabela = document.getElementById('tabela-pacientes');
+const contador = document.getElementById('contador-pacientes');
 
 // Função responsável por adicionar um paciente ao array
 function adicionarPaciente(nome, email, telefone, nascimento) {
@@ -28,6 +29,8 @@ function renderizarTabela() {
 
     tabela.appendChild(linha);
   });
+
+  contador.textContent = `Total de pacientes: ${pacientes.length}`;
 }
 
 // Função utilitária só para formatar a data no padrão dd/mm/aaaa
