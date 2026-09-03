@@ -8,6 +8,13 @@ const contador = document.getElementById('contador-pacientes');
 
 // Função responsável por adicionar um paciente ao array
 function adicionarPaciente(nome, email, telefone, nascimento) {
+  const emailExiste = pacientes.some((paciente) => paciente.email === email);
+
+  if (emailExiste) {
+    alert('Este e-mail já está cadastrado!');
+    return;
+  }
+
   const novoPaciente = {nome, email, telefone, nascimento };
   pacientes.push(novoPaciente);
 }
