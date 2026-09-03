@@ -23,7 +23,7 @@ function adicionarPaciente(nome, email, telefone, nascimento) {
 function renderizarTabela() {
   tabela.innerHTML = ''; // limpa a tabela antes de redesenhar
 
-  pacientes.forEach((paciente) => {
+  pacientes.forEach((paciente, indice) => {
     const linha = document.createElement('tr');
 
     linha.innerHTML = `
@@ -32,6 +32,7 @@ function renderizarTabela() {
       <td>${paciente.telefone}</td>
       <td>${formatarData(paciente.nascimento)}</td>
       <td>${calcularIdade(paciente.nascimento)}</td>
+      <td><button onclick="removerPaciente(${indice})">Remover</button></td>
     `;
 
     tabela.appendChild(linha);
@@ -61,6 +62,12 @@ function calcularIdade(dataNascimento){
   }
 
   return idade;
+}
+
+//funcao para remover usuario
+function removerPaciente(indice){
+  pacientes.splice(indice, 1);
+  renderizarTabela();
 }
 
 // Evento disparado quando o formulário é enviado
