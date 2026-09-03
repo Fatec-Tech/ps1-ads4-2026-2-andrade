@@ -5,6 +5,8 @@ const pacientes = [];
 const formulario = document.getElementById('form-paciente');
 const tabela = document.getElementById('tabela-pacientes');
 const contador = document.getElementById('contador-pacientes');
+const busca = document.getElementById('busca');
+
 
 // Função responsável por adicionar um paciente ao array
 function adicionarPaciente(nome, email, telefone, nascimento) {
@@ -20,11 +22,13 @@ function adicionarPaciente(nome, email, telefone, nascimento) {
 }
 
 // Função responsável por desenhar a tabela inteira a partir do array
-function renderizarTabela() {
+function renderizarTabela(lista = pacientes) {
   tabela.innerHTML = ''; // limpa a tabela antes de redesenhar
 
-  pacientes.forEach((paciente, indice) => {
+  lista.forEach((paciente, indice) => {
     const linha = document.createElement('tr');
+
+    const indiceOriginal = pacientes.indexOf(paciente);
 
     linha.innerHTML = `
       <td>${paciente.nome}</td>
@@ -40,6 +44,16 @@ function renderizarTabela() {
 
   contador.textContent = `Total de pacientes: ${pacientes.length}`;
 }
+
+busca.addEventListener('click', ()=>{
+  const textoBusca = busca.value;
+
+  const pacientesFiltrados = pacientes.filter((paciente) => {
+  return paciente.nome.toLowerCase().includes(textoBusca.toLowerCase());
+});
+
+  renderizarTabela(pacientesFiltrados);
+})
 
 // Função utilitária só para formatar a data no padrão dd/mm/aaaa
 function formatarData(dataISO) {
