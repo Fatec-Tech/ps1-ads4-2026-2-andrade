@@ -1,5 +1,5 @@
 // Array que guarda os pacientes cadastrados (em memória, só nesta sessão)
-const pacientes = [];
+const pacientes = JSON.parse(localStorage.getItem('pacientes')) || [];
 
 // Referências aos elementos do DOM que vamos usar várias vezes
 const formulario = document.getElementById('form-paciente');
@@ -20,6 +20,8 @@ function adicionarPaciente(nome, email, telefone, nascimento) {
 
   const novoPaciente = {nome, email, telefone, nascimento };
   pacientes.push(novoPaciente);
+
+  localStorage.setItem('pacientes', JSON.stringify(pacientes));
 }
 
 // Função responsável por desenhar a tabela inteira a partir do array
@@ -79,8 +81,8 @@ function calcularIdade(dataNascimento){
   let idade = hoje.getFullYear() - nascimento.getFullYear();
 
 // faz a conta do mes
-  const mesAtual = hoje.getMonth;
-  const mesNascimento = nascimento.getMonth;
+  const mesAtual = hoje.getMonth();
+  const mesNascimento = nascimento.getMonth();
 
   if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < nascimento.getDate())
   ) {
@@ -98,6 +100,7 @@ function calcularIdade(dataNascimento){
 //funcao para remover usuario
 function removerPaciente(indice){
   pacientes.splice(indice, 1);
+  localStorage.setItem('pacientes', JSON.stringify(pacientes));
   renderizarTabela();
 }
 
@@ -115,3 +118,5 @@ formulario.addEventListener('submit', (event) => {
 
   formulario.reset(); // limpa os campos do formulário
 });
+
+renderizarTabela();
