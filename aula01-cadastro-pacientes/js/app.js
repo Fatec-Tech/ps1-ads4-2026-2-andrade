@@ -6,6 +6,7 @@ const formulario = document.getElementById('form-paciente');
 const tabela = document.getElementById('tabela-pacientes');
 const contador = document.getElementById('contador-pacientes');
 const busca = document.getElementById('busca');
+const ordenarNome = document.getElementById('ordenar-nome')
 
 
 // Função responsável por adicionar um paciente ao array
@@ -36,7 +37,7 @@ function renderizarTabela(lista = pacientes) {
       <td>${paciente.telefone}</td>
       <td>${formatarData(paciente.nascimento)}</td>
       <td>${calcularIdade(paciente.nascimento)}</td>
-      <td><button onclick="removerPaciente(${indice})">Remover</button></td>
+      <td><button onclick="removerPaciente(${indiceOriginal})">Remover</button></td>
     `;
 
     tabela.appendChild(linha);
@@ -45,7 +46,15 @@ function renderizarTabela(lista = pacientes) {
   contador.textContent = `Total de pacientes: ${pacientes.length}`;
 }
 
-busca.addEventListener('click', ()=>{
+ordenarNome.addEventListener('click', ()=> {
+  pacientes.sort((a, b)=>{
+    return a.nome.localeCompare(b.nome);
+  })
+
+  renderizarTabela();
+})
+
+busca.addEventListener('input', ()=>{
   const textoBusca = busca.value;
 
   const pacientesFiltrados = pacientes.filter((paciente) => {
@@ -64,16 +73,24 @@ function formatarData(dataISO) {
 // funcao pra calcular idade
 function calcularIdade(dataNascimento){
   const hoje = new Date();
-  const nascimento = new Date(dataNascimento);
+  const [ano, mes, dia] = dataNascimento.split('-');
+  const nascimento = new Date(ano, mes - 1, dia);
 
   let idade = hoje.getFullYear() - nascimento.getFullYear();
 
 // faz a conta do mes
-  let mes = hoje.getMonth() - nascimento.getMonth();
+  const mesAtual = hoje.getMonth;
+  const mesNascimento = nascimento.getMonth;
 
-  if (mes<0 || (mes === 0 && hoje.getDate() < nascimento.getDate())){
-    idade--;
-  }
+  if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < nascimento.getDate())
+  ) {
+  idade--;
+}
+  // let mes = hoje.getMonth() - nascimento.getMonth();
+
+  // if (mes<0 || (mes === 0 && hoje.getDate() < nascimento.getDate())){
+  //   idade--;
+  // }
 
   return idade;
 }
