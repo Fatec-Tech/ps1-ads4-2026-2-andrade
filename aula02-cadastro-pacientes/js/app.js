@@ -1,12 +1,29 @@
 const pacientes = [];
 
+// exercicio 2 issue #3
+let pacientesJSON = 0;
+let pacientesManuais = 0;
+// 
+
 const formulario = document.getElementById('form-paciente');
 const tabela = document.getElementById('tabela-pacientes');
 const mensagemCarregando = document.getElementById('carregando');
+// exercicio 2 issue #3
+const contadorJSON = document.getElementById('contador-json');
+const contadorManual = document.getElementById('contador-manual');
+// 
 
 function adicionarPaciente(nome, email, nascimento) {
 	pacientes.push({ nome, email, nascimento });
 }
+
+//atualiza texto dos contadores contadores - exercicio 2 issue #3
+function atualizarContadores(){
+	contadorJSON.textContent = `Pacientes do arquivo JSON: ${pacientesJSON}`
+
+	contadorManual.textContent = `Cadastrados manualmente: ${pacientesManuais}`
+}
+//
 
 function renderizarTabela() {
 	tabela.innerHTML = '';
@@ -31,8 +48,9 @@ function formatarData(dataISO) {
 async function carregarPacientesIniciais() {
 	try {
 
-		// simula a latencia por 1 segundo
+		// simula a latencia por 1 segundo - exercicio 1 issue #3
 		await new Promise(Resolve => setTimeout(Resolve, 1000));
+		// 
 
 		const resposta = await fetch('data/pacientes.json');
 		console.log(resposta);
@@ -44,12 +62,23 @@ async function carregarPacientesIniciais() {
 
 		const dados = await resposta.json(); // converte a resposta em objeto JS
 
+		// exercicio 2 issue #3
+		pacientesJSON = dados.length;
+		//
+
+
+
 		// Adiciona cada paciente vindo do arquivo ao nosso array local
 		dados.forEach((paciente) => {
 			adicionarPaciente(paciente.nome, paciente.email, paciente.nascimento);
 		});
 
 		renderizarTabela();
+
+		// exercicio 2 issue #3
+		atualizarContadores();
+		//
+
 	} catch (erro) {
 		console.error('Não foi possível carregar os pacientes:', erro);
 		mensagemCarregando.textContent =
@@ -70,7 +99,14 @@ formulario.addEventListener('submit', (event) => {
 	const nascimento = document.getElementById('nascimento').value;
 
 	adicionarPaciente(nome, email, nascimento);
+	// exercicio 2 issue #3
+	pacientesManuais++;	
+	//
 	renderizarTabela();
+
+	// exercicio 2 issue #3
+	atualizarContadores();
+	//
 
 	formulario.reset();
 });
