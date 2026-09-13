@@ -30,6 +30,10 @@ function formatarData(dataISO) {
 // Nova função: busca os pacientes iniciais a partir do arquivo JSON
 async function carregarPacientesIniciais() {
 	try {
+
+		// simula a latencia por 1 segundo
+		await new Promise(Resolve => setTimeout(Resolve, 1000));
+
 		const resposta = await fetch('data/pacientes.json');
 		console.log(resposta);
 
