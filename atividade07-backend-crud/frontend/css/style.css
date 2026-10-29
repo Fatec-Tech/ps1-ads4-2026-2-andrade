@@ -1,0 +1,7 @@
+:root { --page: #f4f6fb; --ink: #1c2638; --muted: #687386; --line: #e6eaf1; }
+body { background: var(--page); color: var(--ink); min-height: 100vh; }
+.eyebrow { color: #315bd6; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.panel { background: white; border: 1px solid var(--line); border-radius: 16px; padding: 1.25rem; box-shadow: 0 8px 24px rgba(20,34,60,.04); }
+.table thead th { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+.btn { border-radius: 9px; }
+@media (min-width: 768px) { .panel { padding: 1.5rem; } }
