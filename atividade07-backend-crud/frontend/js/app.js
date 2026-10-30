@@ -1,5 +1,5 @@
 // Local: http://localhost:3000 | Em produção, use a URL do backend Render sem /pacientes.
-const API_BASE_URL = 'https://api-clinica-felipe-andrade.onrender';
+const API_BASE_URL = 'https://api-clinica-felipe-andrade.onrender.com';
 const URL_API = `${API_BASE_URL}/pacientes`;
 const formulario = document.getElementById('form-paciente');
 const tabela = document.getElementById('tabela-pacientes');
